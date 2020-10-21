@@ -1,4 +1,6 @@
 import 'cross-fetch/polyfill';
+import Base64 from 'crypto-js/enc-base64';
+import HmacSHA1 from 'crypto-js/hmac-sha1';
 import OAuth, { RequestOptions, Token } from 'oauth-1.0a';
 
 export interface Request {
@@ -43,8 +45,6 @@ export const oauthFetchJson = async <Output>(
       ...options,
     };
 
-    const CryptoJS = await import('crypto-js');
-
     const oauth = new OAuth({
       consumer: {
         key: request.consumer_key,
@@ -52,7 +52,7 @@ export const oauthFetchJson = async <Output>(
       },
       signature_method: 'HMAC-SHA1',
       hash_function(base_string, key) {
-        return CryptoJS.HmacSHA1(base_string, key).toString(CryptoJS.enc.Base64);
+        return HmacSHA1(base_string, key).toString(Base64);
       },
     });
 
