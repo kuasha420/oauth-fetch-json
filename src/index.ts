@@ -95,7 +95,5 @@ export const oauthFetchJson = async <Output>(
 
 export default {
   oauthFetchJson,
-  Request,
-  Option,
   fetch: oauthFetchJson,
 };

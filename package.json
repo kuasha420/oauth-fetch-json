@@ -1,6 +1,6 @@
 {
   "name": "@kuasha420/oauth-fetch-json",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Functional 0auth protected json fetcher for node, react-native and browsers.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
