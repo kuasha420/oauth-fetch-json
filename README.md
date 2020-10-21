@@ -13,13 +13,13 @@ Install with your favorite package manager.
 Using Yarn:
 
 ```
-yarn add oauth-fetch-json
+yarn add @kuasha420/oauth-fetch-json
 ```
 
 Using NPM:
 
 ```
-npm i oauth-fetch-json
+npm i @kuasha420/oauth-fetch-json
 
 ```
 
@@ -28,14 +28,14 @@ Now import with ESM or CommonJS Syntax:
 #### Using Named Exports
 
 ```typescript
-import { oauthFetchJson } from 'oauth-fetch-json';
+import { oauthFetchJson } from '@kuasha420/oauth-fetch-json';
 const res = await oauthFetchJson(/*...*/);
 ```
 
 #### Using Default Exports
 
 ```typescript
-import OFJson from 'oauth-fetch-json';
+import OFJson from '@kuasha420/oauth-fetch-json';
 const res = await OFJson.oauthFetchJson(/*...*/);
 // or, use alias fetch
 const res = await OFJson.fetch(/*...*/);
@@ -46,7 +46,7 @@ const res = await OFJson.fetch(/*...*/);
 Add a script tag with the umd bundle from unpkg or release page.
 
 ```html
-<script src="https://unpkg.com/oauth-fetch-json"></script>
+<script src="https://unpkg.com/@kuasha420/oauth-fetch-json"></script>
 ```
 
 Now you will have `OFJson` global in the window object.
@@ -54,7 +54,7 @@ Now you will have `OFJson` global in the window object.
 ## Example
 
 ```typescript
-import { oauthFetchJson } from 'oauth-fetch-json';
+import { oauthFetchJson } from '@kuasha420/oauth-fetch-json';
 
 const main = async () => {
   try {

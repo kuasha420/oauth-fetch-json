@@ -1,5 +1,5 @@
 {
-  "name": "oauth-fetch-json",
+  "name": "@kuasha420/oauth-fetch-json",
   "version": "0.1.0",
   "description": "Functional 0auth protected json fetcher for node, react-native and browsers.",
   "main": "dist/index.js",
