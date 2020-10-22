@@ -76,7 +76,7 @@ main();
 ## API
 
 ```typescript
-const oauthFetchJson: <Output>(
+const oauthFetchJson: <Output = any>(
   request: Request,
   options?: Partial<Options>,
   extraHeaders?: Record<string, string>

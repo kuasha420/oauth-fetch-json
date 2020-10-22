@@ -27,7 +27,7 @@ export interface Options {
   authAttachment: 'header' | 'body';
 }
 
-export const oauthFetchJson = async <Output>(
+export const oauthFetchJson = async <Output = any>(
   request: Request,
   options?: Partial<Options>,
   extraHeaders?: Record<string, string>
