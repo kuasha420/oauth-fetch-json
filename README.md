@@ -91,11 +91,9 @@ interface Request {
   access_token?: string;
   token_secret?: string;
 }
-interface Options {
+export interface Options {
   cors: boolean;
   followRedirect: boolean;
-  includeBodyHash: boolean;
-  authAttachment: 'header' | 'body';
 }
 ```
 
@@ -106,3 +104,7 @@ This package is licensed under the MIT License.
 ## Contribution
 
 Any kind of contribution is welcome. Thanks!
+
+## Disclaimer
+
+All APIS OF THIS PACKAGE ARE CONSIDERED UNSTABLE ACROSS VERSION UNTILL 1.0.

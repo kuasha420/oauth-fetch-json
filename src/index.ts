@@ -1,7 +1,7 @@
 import 'cross-fetch/polyfill';
 import Base64 from 'crypto-js/enc-base64';
 import HmacSHA1 from 'crypto-js/hmac-sha1';
-import OAuth, { RequestOptions, Token } from 'oauth-1.0a';
+import OAuth, { RequestOptions } from 'oauth-1.0a';
 
 export interface Request {
   /** Request URL */
@@ -23,8 +23,6 @@ export interface Request {
 export interface Options {
   cors: boolean;
   followRedirect: boolean;
-  includeBodyHash: boolean;
-  authAttachment: 'header' | 'body';
 }
 
 export const oauthFetchJson = async <Output = any>(
@@ -36,8 +34,6 @@ export const oauthFetchJson = async <Output = any>(
     const defaultOptions: Options = {
       cors: true,
       followRedirect: true,
-      includeBodyHash: false,
-      authAttachment: 'header',
     };
 
     const finalOptions: Options = {
@@ -54,20 +50,30 @@ export const oauthFetchJson = async <Output = any>(
       hash_function(base_string, key) {
         return HmacSHA1(base_string, key).toString(Base64);
       },
+      body_hash_function(base_string, key) {
+        return HmacSHA1(base_string, key).toString(Base64);
+      },
     });
 
     const data: RequestOptions = {
       url: request.url,
       method: request.method,
       data: request.body,
-      includeBodyHash: finalOptions.includeBodyHash,
+      includeBodyHash: request.body ? true : false,
     };
 
-    const token: Partial<Token> = { key: request.access_token, secret: request.token_secret };
+    let auth: OAuth.Authorization;
 
-    const auth = oauth.authorize(data, token.key ? (token as Token) : undefined);
+    if (request.access_token && request.token_secret) {
+      auth = oauth.authorize(data, {
+        key: request.access_token,
+        secret: request.token_secret,
+      });
+    } else {
+      auth = oauth.authorize(data);
+    }
 
-    const headers = oauth.toHeader(auth);
+    const header = oauth.toHeader(auth);
 
     const defaultHeaders = {
       Accept: 'application/json',
@@ -76,13 +82,10 @@ export const oauthFetchJson = async <Output = any>(
 
     const requestOptions: RequestInit = {
       method: request.method,
-      headers:
-        finalOptions.authAttachment === 'header'
-          ? { ...defaultHeaders, ...headers, ...extraHeaders }
-          : { ...defaultHeaders, ...extraHeaders },
+      headers: { ...defaultHeaders, ...header, ...extraHeaders },
       redirect: finalOptions.followRedirect ? 'follow' : undefined,
       mode: finalOptions.cors ? 'cors' : undefined,
-      body: request.body ? JSON.stringify(request.body) : undefined,
+      body: JSON.stringify(request.body),
     };
 
     const res = await fetch(request.url, requestOptions);
